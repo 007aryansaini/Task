@@ -1,0 +1,125 @@
+#main {
+  padding: 1rem;
+  background-color: rgb(194, 169, 254);
+}
+
+.buttonContainer {
+  position: relative;
+}
+
+#connect {
+  border: 0;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(84, 105, 212);
+  box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+  border-radius: 4px;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 4px 8px;
+  display: inline-block;
+  min-height: 28px;
+  transition: background-color 0.24s, box-shadow 0.24s;
+}
+
+#addressText {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: rgb(8, 8, 8);
+  text-align: center;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#register {
+  border: 0;
+  margin-top: 100px;
+  color: white;
+  background-color: rgb(84, 105, 212);
+  box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+  border-radius: 4px;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 4px 8px;
+  display: inline-block;
+  min-height: 28px;
+  transition: background-color 0.24s, box-shadow 0.24s;
+}
+
+#registerContainer {
+  display: flex;
+  justify-content: center;
+}
+
+#inputsContainer {
+  display: flex;
+  flex-direction: rpw;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.inputs {
+  border-radius: 10px;
+  height: 30px;
+  width: 300px;
+  font-size: medium;
+  margin: 10px;
+  border-color: blueviolet;
+}
+
+#send {
+  border: 0;
+
+  color: white;
+  background-color: rgb(84, 105, 212);
+  box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px,
+    rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px,
+    rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+  border-radius: 4px;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 4px 8px;
+  display: inline-block;
+  min-height: 28px;
+  transition: background-color 0.24s, box-shadow 0.24s;
+}
+
+#h3 {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+ul li {
+  list-style: none;
+  position: relative;
+  padding: 3px 0 2px 25px;
+  font-weight: bold;
+  font-size: large;
+}
+
+ul li::before {
+  content: "*";
+  position: absolute;
+  top: 6px;
+  left: 0;
+}
+
+#msg {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
