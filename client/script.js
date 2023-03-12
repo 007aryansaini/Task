@@ -175,9 +175,11 @@ async function sendMessage(event) {
       await contract.sendMessage(address, message);
 
       contract.on("messageSent", (from, to, message) => {
-        const li = document.createElement("li");
-        li.textContent = message;
-        container.appendChild(li);
+        if (from.toLowerCase() === defaultAccount.toLowerCase()) {
+          const li = document.createElement("li");
+          li.textContent = message;
+          container.appendChild(li);
+        }
       });
     } catch (error) {
       alert(error.message);
