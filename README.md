@@ -14,12 +14,12 @@ https://640e1647740f1a2e41738715--bespoke-bunny-2e1e15.netlify.app/
 
 
 ## Steps to use app
-
-1. The User have to connect the metamask with the dapp.
-2. The User have to register to start messaging if the user is already registered then no need to register.
-3. Then the user can send message to the person he wants by providing the address of that person and this person should be registered with the app.
-4. The Messages sent by user are visible on the bottom of the screen.
-5. The new messages that are sent by the user also get updated on the front end.
+1. The metamask should be on goerli testnet.
+2. The User have to connect the metamask with the dapp.
+3. The User have to register to start messaging if the user is already registered then no need to register.
+4. Then the user can send message to the person he wants by providing the address of that person and this person should be registered with the app.
+5. The Messages sent by user are visible on the bottom of the screen.
+6. The new messages that are sent by the user also get updated on the front end.
 
 ## Screenshots of app
 
