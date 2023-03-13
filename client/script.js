@@ -133,7 +133,7 @@ async function connectWallet() {
       contract = new ethers.Contract(contractAddress, abi, signer);
       const isRegistered = await contract.registered(defaultAccount);
       if (isRegistered) {
-        registerBtn.innerText = "Start Messanging";
+        registerBtn.innerText = "Start messaging";
         await getMessages();
       }
     } catch (error) {
@@ -149,11 +149,11 @@ async function registerUser() {
   try {
     const isRegistered = await contract.registered(defaultAccount);
     if (isRegistered) {
-      registerBtn.innerText = "Start Messanging";
+      registerBtn.innerText = "Start messaging";
     } else {
       await contract.register();
 
-      registerBtn.innerText = "Start Messanging";
+      registerBtn.innerText = "Start messaging";
       const isRegistered = await contract.registered(defaultAccount);
     }
   } catch (error) {
