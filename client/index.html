@@ -15,36 +15,86 @@
     <div id="buttonContainer">
       <button id="connect">Connect Wallet</button>
       <div>
+
         <span id="addressText">
           Your Address :
           <span id="wallet-address"></span>
         </span>
       </div>
 
-      <div id="registerContainer">
-        <button id="register">Register for chatting</button>
-      </div>
+      
 
       <div id="inputsContainer">
         <form>
-          <input type="text" id="address" class="inputs" placeholder="To" />
+          <input type="text" id="startTime" class="inputs" placeholder="Start Time Stamp" />
           <input
             type="text"
-            id="input"
+            id="endTime"
             class="inputs"
-            placeholder="Enter a message"
+            placeholder="End Time Stamp"
           />
-          <input type="submit" id="send" value="send" />
+          <input type="text" id="hardCap" class="inputs" placeholder="Hard Cap" />
+          <input type="text" id="whiteListUsers" class="inputs" placeholder="Addresses To WhiteList" />
+
+          <input type="submit" id="createIDO" value="Create IDO" />
         </form>
       </div>
 
-      <div id="msg">
-        <h3>Messages sent by you</h3>
+
+      <div>
+        <span id="addressText">
+          Transaction Hash :
+          <span id="CreateHash"></span>
+        </span>
       </div>
-      <div id="messages">
-        <ul id="container"></ul>
+
+
+      <div id="inputsContainer">
+        <form>
+          <input type="text" id="amountFund" class="inputs" placeholder="Amount in WEI" />
+          
+
+          <input type="submit" id="fund" value="fund" />
+        </form>
       </div>
-    </div>
+
+
+     
+      <div>
+        <span id="addressText">
+          Transaction Hash :
+          <span id="fundHash"></span>
+        </span>
+      </div>
+
+      
+      <div id="inputsContainer">
+        <form>
+          <input type="text" id="To" class="inputs" placeholder="To" />
+          <input
+            type="text"
+            id="amount"
+            class="inputs"
+            placeholder="amount"
+          />
+      
+
+          <input type="submit" id="transfer" value="Transfer" />
+        </form>
+
+        <div>
+          <span id="addressText">
+            Transaction Hash :
+            <span id="transferhash"></span>
+          </span>
+        </div>
+
+
+      </div>
+
+
+
+   
   </body>
   <script src="./script.js"></script>
 </html>

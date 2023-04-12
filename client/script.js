@@ -1,40 +1,44 @@
 const abi = [
   {
-    anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "message",
-        type: "string",
+        components: [
+          {
+            internalType: "uint256",
+            name: "startTime",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "endTime",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "hardCap",
+            type: "uint256",
+          },
+          {
+            internalType: "address[]",
+            name: "whiteListUsers",
+            type: "address[]",
+          },
+        ],
+        internalType: "struct IdoDetails",
+        name: "_idoDetails",
+        type: "tuple",
       },
     ],
-    name: "messageSent",
-    type: "event",
+    name: "createIDO",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     inputs: [],
-    name: "register",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "nonpayable",
+    name: "fundIdo",
+    outputs: [],
+    stateMutability: "payable",
     type: "function",
   },
   {
@@ -45,30 +49,77 @@ const abi = [
         type: "address",
       },
       {
-        internalType: "string",
-        name: "_message",
-        type: "string",
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
       },
     ],
-    name: "sendMessage",
+    name: "transferIdoFund",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
     inputs: [
       {
+        indexed: false,
         internalType: "address",
-        name: "_user",
+        name: "_investor",
         type: "address",
       },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
     ],
-    name: "getAllMessages",
+    name: "Invested",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "_to",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "idoDetails",
     outputs: [
       {
-        internalType: "string[]",
-        name: "",
-        type: "string[]",
+        internalType: "uint256",
+        name: "startTime",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "endTime",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "hardCap",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -82,7 +133,26 @@ const abi = [
         type: "address",
       },
     ],
-    name: "registered",
+    name: "investorContribution",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "isWhiteList",
     outputs: [
       {
         internalType: "bool",
@@ -93,11 +163,35 @@ const abi = [
     stateMutability: "view",
     type: "function",
   },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalFundRaised",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
 
-// 0x746E3dAf6Bb9c367f6140c1Be0387770DF756331
-const contractAddress = "0xBE3B3C2E607c1c4C29678A50eefEf1E36864715C";
-// 0xBE3B3C2E607c1c4C29678A50eefEf1E36864715C
+const contractAddress = "0x03A45564daEeE5F89D99A3F29608E66398437E76";
 let defaultAccount;
 let provider;
 let contract;
@@ -105,22 +199,29 @@ let contract;
 // DOM Selectors
 const walletConnectBtn = document.querySelector("#connect");
 const walletAddress = document.querySelector("#wallet-address");
-const registerBtn = document.querySelector("#register");
-const sendBtn = document.querySelector("#send");
-const textMessage = document.querySelector("#input");
-const textAddress = document.querySelector("#address");
-const container = document.querySelector("#container");
-const getMsgBtn = document.querySelector("#getMessages");
+const startTime = document.querySelector("#startTime");
+const endTime = document.querySelector("#endTime");
+const hardCap = document.querySelector("#hardCap");
+const whiteListUsers = document.querySelector("#whiteListUsers");
+const createIDO = document.querySelector("#createIDO");
+const createIDOTxHash = document.querySelector("#CreateHash");
+const fund = document.querySelector("#fund");
+const fundAmount = document.querySelector("#amountFund");
+const fundHash = document.querySelector("#fundHash");
+const to = document.querySelector("#To");
+const amount = document.querySelector("#amount");
+const transfer = document.querySelector("#transfer");
+const transferhash = document.querySelector("#transferhash");
 
 // Connect to Metamask function
 async function connectWallet() {
   if (window.ethereum && window.ethereum.isMetaMask) {
     try {
       // Metasmak connect
-      removeAllItems();
-      registerBtn.innerText = "Register to start chatting";
+
       provider = new ethers.providers.Web3Provider(window.ethereum);
       const accounts = await provider.send("eth_requestAccounts", []);
+
       defaultAccount = accounts[0];
 
       walletAddress.innerText = defaultAccount;
@@ -131,11 +232,6 @@ async function connectWallet() {
 
       // initializing Contract
       contract = new ethers.Contract(contractAddress, abi, signer);
-      const isRegistered = await contract.registered(defaultAccount);
-      if (isRegistered) {
-        registerBtn.innerText = "Start messaging";
-        await getMessages();
-      }
     } catch (error) {
       alert(error.message);
     }
@@ -144,78 +240,63 @@ async function connectWallet() {
   }
 }
 
-// Function to register user
-async function registerUser() {
-  try {
-    const isRegistered = await contract.registered(defaultAccount);
-    if (isRegistered) {
-      registerBtn.innerText = "Start messaging";
-    } else {
-      await contract.register();
-
-      registerBtn.innerText = "Start messaging";
-      const isRegistered = await contract.registered(defaultAccount);
-    }
-  } catch (error) {
-    alert(error.message);
-  }
-}
-
-// function to send message
-async function sendMessage(event) {
+async function createIdoHandler(event) {
   event.preventDefault();
 
-  const message = textMessage.value;
-  const address = textAddress.value;
-  textAddress.value = "";
-  textMessage.value = "";
+  const st = startTime.value * 1;
+  const et = endTime.value * 1;
+  const hc = hardCap.value * 1;
+  const addresses = whiteListUsers.value;
 
-  if (message !== "" && address !== "") {
-    try {
-      await contract.sendMessage(address, message);
+  const stringArray = addresses; // Example string array
+  const jsArray = JSON.parse(stringArray); // Convert string to JavaScript array
 
-      contract.on("messageSent", (from, to, message) => {
-        if (from.toLowerCase() === defaultAccount.toLowerCase()) {
-          const li = document.createElement("li");
-          li.textContent = message;
-          container.appendChild(li);
-        }
-      });
-    } catch (error) {
-      alert(error.message);
-    }
-  } else {
-    alert("Invald address or message");
+  const param = {
+    startTime: st,
+    endTime: et,
+    hardCap: hc,
+    whiteListUsers: jsArray,
+  };
+
+  try {
+    const tx = await contract.createIDO(param);
+    createIDOTxHash.innerText = tx.hash;
+  } catch (error) {
+    alert(error);
   }
 }
 
-// Function to get All Messages
+async function fundHandler(event) {
+  event.preventDefault();
+  const amount = fundAmount.value * 1;
 
-async function getMessages() {
   try {
-    const messages = await contract.getAllMessages(defaultAccount);
+    const options = { value: amount };
 
-    messages.forEach((item) => {
-      const li = document.createElement("li");
+    const tx = await contract.fundIdo(options);
 
-      li.textContent = item;
-
-      container.appendChild(li);
-    });
+    fundHash.innerText = tx.hash;
   } catch (error) {
     alert(error.message);
   }
 }
 
-// Removes UL Elements
+async function transferHandler(event) {
+  event.preventDefault();
 
-function removeAllItems() {
-  while (container.firstChild) {
-    container.removeChild(container.firstChild);
+  const _to = to.value;
+  const _amount = amount.value * 1;
+
+  try {
+    const tx = await contract.transferIdoFund(_to, _amount);
+    transferhash.innerText = tx.hash;
+  } catch (error) {
+    alert(error.message);
   }
 }
 
 // Event listners
 walletConnectBtn.addEventListener("click", connectWallet);
-registerBtn.addEventListener("click", registerUser);
-sendBtn.addEventListener("click", sendMessage);
+createIDO.addEventListener("click", createIdoHandler);
+fund.addEventListener("click", fundHandler);
+transfer.addEventListener("click", transferHandler);

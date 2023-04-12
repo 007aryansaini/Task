@@ -7,6 +7,7 @@
   position: relative;
 }
 
+/* 
 #connect {
   border: 0;
   position: absolute;
@@ -60,7 +61,7 @@
 #registerContainer {
   display: flex;
   justify-content: center;
-}
+} */
 
 #inputsContainer {
   display: flex;
@@ -73,12 +74,13 @@
 .inputs {
   border-radius: 10px;
   height: 30px;
-  width: 300px;
+  width: 200px;
   font-size: medium;
   margin: 10px;
   border-color: blueviolet;
 }
 
+/* 
 #send {
   border: 0;
 
@@ -122,4 +124,4 @@ ul li::before {
 
   justify-content: center;
   align-items: center;
-}
+} */

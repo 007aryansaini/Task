@@ -4,9 +4,12 @@ require("dotenv").config();
 module.exports = {
   solidity: "0.8.19",
   networks: {
-    goerli: {
-      url: process.env.INFURA_URL,
-      accounts: [process.env.ACCOUNT_PRIVATE_KEY],
+    bscTestnet: {
+      url: "https://data-seed-prebsc-1-s1.binance.org:8545", // BSC testnet endpoint
+      chainId: 97, // BSC testnet chain ID
+      accounts: {
+        mnemonic: process.env.ACCOUNT_PRIVATE_KEY, // Your metamask mnemonic
+      },
     },
   },
 };
